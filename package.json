@@ -1,5 +1,5 @@
 {
-  "name": "shyarora-demo-file",
+  "name": "shyarora-demo",
   "displayName": "shyarora-demo",
   "description": "",
   "version": "1.0.0",
@@ -14,14 +14,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:shyarora-demo-file.info-command"
+    "onCommand:shyarora-demo.setup-installer"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "shyarora-demo-file.info-command",
-        "title": "Info Command"
+        "command": "shyarora-demo.setup-installer",
+        "title": "Setup Installer"
       }
     ]
   },

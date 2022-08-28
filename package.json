@@ -2,7 +2,7 @@
   "name": "shyarora-demo-file",
   "displayName": "shyarora-demo",
   "description": "",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -14,14 +14,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:shyarora-demo.helloWorld"
+    "onCommand:shyarora-demo-file.info-command"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "shyarora-demo.helloWorld",
-        "title": "Hello World"
+        "command": "shyarora-demo-file.info-command",
+        "title": "Info Command"
       }
     ]
   },

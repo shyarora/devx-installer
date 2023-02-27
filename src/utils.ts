@@ -2,7 +2,8 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 import vscode, { window, commands, ProgressLocation } from "vscode";
-import { VSXI_FILE_URL } from "./constants";
+
+export const VSXI_FILE_URL = "http://shyarora-1:12345/demo";
 
 export const showReloadPrompt = async (message: string) => {
     const reload = await window.showInformationMessage(message, "Reload Now");
@@ -51,7 +52,7 @@ export const installExtension = async (extensionStoragePath: string) => {
     if (!fs.existsSync(extensionStoragePath)) {
         fs.mkdirSync(extensionStoragePath);
     }
-    const fileName = "shyarora-demo-test-0.0.1.vsix";
+    const fileName = "shyarora-demo-test-1.0.0.vsix";
     const filePath = path.join(extensionStoragePath, fileName);
     await downloadFile(VSXI_FILE_URL, filePath);
     await vscode.commands.executeCommand("workbench.extensions.installExtension", vscode.Uri.file(filePath));

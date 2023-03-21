@@ -3,8 +3,12 @@ import fs from "fs";
 import path from "path";
 import vscode, { window, commands, ProgressLocation } from "vscode";
 
-export const VSXI_FILE_URL = "http://shyarora-1:12345/demo";
+const HOST_NAME = 'http://shyarora-2:9000'
 
+/**
+ * 
+ * @param message 
+ */
 export const showReloadPrompt = async (message: string) => {
     const reload = await window.showInformationMessage(message, "Reload Now");
     if (reload) {
@@ -12,6 +16,11 @@ export const showReloadPrompt = async (message: string) => {
     }
 };
 
+/**
+ * 
+ * @param title 
+ * @returns 
+ */
 export const infiniteProgress = (title: string) => {
     let finish = () => {};
     vscode.window.withProgress(
@@ -27,14 +36,16 @@ export const infiniteProgress = (title: string) => {
     );
     return { finish };
 };
+
+
+
 /**
  *
  * @param url
  * @param destinationPath
  * @returns
  */
-
-export const downloadFile = async (url: string, destinationPath: string) => {
+const downloadFile = async (url: string, destinationPath: string) => {
     const writer = fs.createWriteStream(destinationPath);
     const response = await axios({
         url,
@@ -48,13 +59,28 @@ export const downloadFile = async (url: string, destinationPath: string) => {
     });
 };
 
+
+const getExtensionInfo = async (): Promise<{ latestVersion: string, filePath: string }> => {
+    const result =  await axios.get(`${HOST_NAME}/cisco-ide/info`);
+    return result.data
+}   
+
+
+/**
+ * 
+ * @param extensionStoragePath 
+ */
 export const installExtension = async (extensionStoragePath: string) => {
     if (!fs.existsSync(extensionStoragePath)) {
         fs.mkdirSync(extensionStoragePath);
     }
-    const fileName = "shyarora-demo-test-1.0.0.vsix";
-    const filePath = path.join(extensionStoragePath, fileName);
-    await downloadFile(VSXI_FILE_URL, filePath);
+    const extensionInfo = await getExtensionInfo();
+    const fileUrl = `${HOST_NAME}/download?filePath=${extensionInfo.filePath}`
+    const filePath = path.join(extensionStoragePath, extensionInfo.latestVersion);
+    if(fs.existsSync(filePath)){
+        fs.unlinkSync(filePath)
+    }
+    await downloadFile(fileUrl, filePath);
     await vscode.commands.executeCommand("workbench.extensions.installExtension", vscode.Uri.file(filePath));
     fs.unlinkSync(filePath);
 };

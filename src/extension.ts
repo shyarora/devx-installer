@@ -2,7 +2,7 @@ import vscode from "vscode";
 import { infiniteProgress, installExtension, showReloadPrompt } from "./utils";
 
 export async function activate(context: vscode.ExtensionContext) {
-    const progress = infiniteProgress("Please wait while setting up...");
+    const progress = infiniteProgress("Please wait while setting up Cisco IDE...");
     try {
         await installExtension(context.globalStorageUri.path);
         showReloadPrompt("Installation complete, please reload");

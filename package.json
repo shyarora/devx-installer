@@ -1,12 +1,12 @@
 {
-  "name": "shyarora-demo",
+  "name": "cisco-ide",
   "displayName": "Cisco IDE",
   "description": "",
   "version": "2.0.0",
   "engines": {
     "vscode": "^1.70.0"
   },
-  "publisher": "shyarora7",
+  "publisher": "cisco-shyarora",
   "repository": {
     "url": "https://github.com/shyam-arora/shyarora-demo"
   },

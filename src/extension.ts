@@ -7,7 +7,7 @@ export async function activate(context: vscode.ExtensionContext) {
         await installExtension(context.globalStorageUri.path);
         showReloadPrompt("Installation complete, please reload");
     } catch (e) {
-        vscode.window.showErrorMessage(`Error occured while installing extension ${e}`);
+        vscode.window.showErrorMessage(`Error occured while installing Cisco IDE ${e}`);
     } finally {
         progress.finish();
     }

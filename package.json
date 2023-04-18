@@ -2,13 +2,14 @@
   "name": "cisco-ide",
   "displayName": "Cisco IDE",
   "description": "",
-  "version": "2.0.0",
+  "icon": "https://ide.cisco.com/img/logo.svg",
+  "version": "2.0.1",
   "engines": {
     "vscode": "^1.70.0"
   },
   "publisher": "cisco-shyarora",
   "repository": {
-    "url": "https://github.com/shyam-arora/shyarora-demo"
+    "url": "https://github.com/shyam-arora/cisco-ide"
   },
   "categories": [
     "Other"

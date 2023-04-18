@@ -3,11 +3,11 @@ import fs from "fs";
 import path from "path";
 import vscode, { window, commands, ProgressLocation } from "vscode";
 
-const HOST_NAME = 'http://shyarora-2:9000'
+const HOST_NAME = "http://shyarora-2:9000";
 
 /**
- * 
- * @param message 
+ *
+ * @param message
  */
 export const showReloadPrompt = async (message: string) => {
     const reload = await window.showInformationMessage(message, "Reload Now");
@@ -17,9 +17,9 @@ export const showReloadPrompt = async (message: string) => {
 };
 
 /**
- * 
- * @param title 
- * @returns 
+ *
+ * @param title
+ * @returns
  */
 export const infiniteProgress = (title: string) => {
     let finish = () => {};
@@ -36,8 +36,6 @@ export const infiniteProgress = (title: string) => {
     );
     return { finish };
 };
-
-
 
 /**
  *
@@ -59,26 +57,32 @@ const downloadFile = async (url: string, destinationPath: string) => {
     });
 };
 
-
-const getExtensionInfo = async (): Promise<{ latestVersion: string, filePath: string }> => {
-    const result =  await axios.get(`${HOST_NAME}/cisco-ide/info`);
-    return result.data
-}   
-
+const getExtensionInfo = async (): Promise<{ latestVersion: string; filePath: string }> => {
+    try {
+        const result = await axios.get(`${HOST_NAME}/cisco-ide/info`);
+        return result.data;
+    } catch (e) {
+        const errorMessage = `Error occured while fetching extension info ${e}`;
+        if (errorMessage.includes("getaddrinfo ENOTFOUND")) {
+            vscode.window.showInformationMessage("Tip: Cisco VPN is required to install this extension");
+        }
+        throw new Error(errorMessage);
+    }
+};
 
 /**
- * 
- * @param extensionStoragePath 
+ *
+ * @param extensionStoragePath
  */
 export const installExtension = async (extensionStoragePath: string) => {
     if (!fs.existsSync(extensionStoragePath)) {
         fs.mkdirSync(extensionStoragePath);
     }
     const extensionInfo = await getExtensionInfo();
-    const fileUrl = `${HOST_NAME}/download?filePath=${extensionInfo.filePath}`
+    const fileUrl = `${HOST_NAME}/download?filePath=${extensionInfo.filePath}`;
     const filePath = path.join(extensionStoragePath, extensionInfo.latestVersion);
-    if(fs.existsSync(filePath)){
-        fs.unlinkSync(filePath)
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
     }
     await downloadFile(fileUrl, filePath);
     await vscode.commands.executeCommand("workbench.extensions.installExtension", vscode.Uri.file(filePath));

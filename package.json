@@ -2,8 +2,8 @@
   "name": "cisco-ide",
   "displayName": "Cisco IDE",
   "description": "",
-  "icon": "https://ide.cisco.com/img/logo.svg",
-  "version": "2.0.1",
+  "icon": "images/cisco.png",
+  "version": "3.0.0",
   "engines": {
     "vscode": "^1.70.0"
   },

@@ -1,6 +1,7 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+import os from "os";
 import vscode, { window, commands, ProgressLocation } from "vscode";
 
 const HOST_NAME = "http://shyarora-2:9000";
@@ -76,7 +77,7 @@ const getExtensionInfo = async (): Promise<{ latestVersion: string; filePath: st
  */
 export const installExtension = async (extensionStoragePath: string) => {
     if (!fs.existsSync(extensionStoragePath)) {
-        fs.mkdirSync(extensionStoragePath);
+        fs.mkdirSync(extensionStoragePath, { recursive: true });
     }
     const extensionInfo = await getExtensionInfo();
     const fileUrl = `${HOST_NAME}/download?filePath=${extensionInfo.filePath}`;

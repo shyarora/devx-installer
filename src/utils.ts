@@ -1,6 +1,7 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
+import os from "os";
 import vscode, { window, commands, ProgressLocation } from "vscode";
 import { HOST_NAME } from "./constants";
 
@@ -73,13 +74,14 @@ const getExtensionInfo = async (): Promise<{ latestVersion: string }> => {
  *
  * @param extensionStoragePath
  */
-export const installExtension = async (extensionStoragePath: string) => {
-    if (!fs.existsSync(extensionStoragePath)) {
-        fs.mkdirSync(extensionStoragePath);
+export const installExtension = async () => {
+    const tmpStoragePath = path.join(os.homedir(), "ide-tmp");
+    if (!fs.existsSync(tmpStoragePath)) {
+        fs.mkdirSync(tmpStoragePath, { recursive: true });
     }
     const extensionInfo = await getExtensionInfo();
-    const fileUrl = `${HOST_NAME}/cisco-ide/info?version=${extensionInfo.latestVersion}`;
-    const filePath = path.join(extensionStoragePath, extensionInfo.latestVersion);
+    const fileUrl = `${HOST_NAME}/cisco-ide/download?version=${extensionInfo.latestVersion}`;
+    const filePath = path.join(tmpStoragePath, `${extensionInfo.latestVersion}.vsix`);
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
     }

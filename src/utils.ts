@@ -2,8 +2,7 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 import vscode, { window, commands, ProgressLocation } from "vscode";
-
-const HOST_NAME = "http://shyarora-2:9000";
+import { HOST_NAME } from "./constants";
 
 /**
  *
@@ -57,7 +56,7 @@ const downloadFile = async (url: string, destinationPath: string) => {
     });
 };
 
-const getExtensionInfo = async (): Promise<{ latestVersion: string; filePath: string }> => {
+const getExtensionInfo = async (): Promise<{ latestVersion: string }> => {
     try {
         const result = await axios.get(`${HOST_NAME}/cisco-ide/info`);
         return result.data;
@@ -79,7 +78,7 @@ export const installExtension = async (extensionStoragePath: string) => {
         fs.mkdirSync(extensionStoragePath);
     }
     const extensionInfo = await getExtensionInfo();
-    const fileUrl = `${HOST_NAME}/download?filePath=${extensionInfo.filePath}`;
+    const fileUrl = `${HOST_NAME}/cisco-ide/info?version=${extensionInfo.latestVersion}`;
     const filePath = path.join(extensionStoragePath, extensionInfo.latestVersion);
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);

@@ -3,7 +3,7 @@
     "displayName": "Cisco IDE",
     "description": "",
     "icon": "images/cisco.png",
-    "version": "4.0.0",
+    "version": "23.5.1",
     "engines": {
         "vscode": "^1.70.0"
     },

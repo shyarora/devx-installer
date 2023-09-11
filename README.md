@@ -1,4 +1,4 @@
-# Cisco IDE
+# DevX Installer
 
 Enhance your development experience with Visual Studio Code.
 

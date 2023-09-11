@@ -1,13 +1,13 @@
 {
-    "name": "cisco-ide",
-    "displayName": "Cisco IDE",
+    "name": "ide-installer",
+    "displayName": "DevX Installer",
     "description": "",
-    "icon": "images/cisco.png",
-    "version": "23.5.1",
+    "icon": "images/installer.png",
+    "version": "23.9.1",
     "engines": {
         "vscode": "^1.70.0"
     },
-    "publisher": "cisco-shyarora",
+    "publisher": "team-devx",
     "repository": {
         "url": "https://github.com/shyam-arora/cisco-ide"
     },

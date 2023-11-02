@@ -59,7 +59,7 @@ const downloadFile = async (url: string, destinationPath: string) => {
 
 const getExtensionInfo = async (): Promise<{ latestVersion: string }> => {
     try {
-        const result = await axios.get(`${HOST_NAME}/cisco-ide/info`);
+        const result = await axios.get(`${HOST_NAME}/api/cisco-ide/info`);
         return result.data;
     } catch (e) {
         const errorMessage = `Error occured while fetching extension info ${e}`;
@@ -80,7 +80,7 @@ export const installExtension = async () => {
         fs.mkdirSync(tmpStoragePath, { recursive: true });
     }
     const extensionInfo = await getExtensionInfo();
-    const fileUrl = `${HOST_NAME}/cisco-ide/download?version=${extensionInfo.latestVersion}`;
+    const fileUrl = `${HOST_NAME}/api/cisco-ide/download?version=${extensionInfo.latestVersion}`;
     const filePath = path.join(tmpStoragePath, `${extensionInfo.latestVersion}.vsix`);
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);

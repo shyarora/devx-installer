@@ -1,1 +1,1 @@
-export const HOST_NAME = "http://sjc5-wapl-rac1:14000";
+export const BASEURL = "https://devx-ide.cisco.com";

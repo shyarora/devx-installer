@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import vscode, { window, commands, ProgressLocation } from "vscode";
-import { HOST_NAME } from "./constants";
+import { BASEURL } from "./constants";
 
 /**
  *
@@ -57,10 +57,10 @@ const downloadFile = async (url: string, destinationPath: string) => {
     });
 };
 
-const getExtensionInfo = async (): Promise<{ latestVersion: string }> => {
+const getExtensionInfo = async (): Promise<{ version: string; fileKey: string }> => {
     try {
-        const result = await axios.get(`${HOST_NAME}/cisco-ide/info`);
-        return result.data;
+        const result = await axios.get(`${BASEURL}/extension-namespace/api/marketplace/v1/get-installer-info`);
+        return result.data?.latestVersion;
     } catch (e) {
         const errorMessage = `Error occured while fetching extension info ${e}`;
         if (errorMessage.includes("getaddrinfo ENOTFOUND")) {
@@ -79,9 +79,9 @@ export const installExtension = async () => {
     if (!fs.existsSync(tmpStoragePath)) {
         fs.mkdirSync(tmpStoragePath, { recursive: true });
     }
-    const extensionInfo = await getExtensionInfo();
-    const fileUrl = `${HOST_NAME}/cisco-ide/download?version=${extensionInfo.latestVersion}`;
-    const filePath = path.join(tmpStoragePath, `${extensionInfo.latestVersion}.vsix`);
+    const { fileKey, version } = await getExtensionInfo();
+    const fileUrl = `${BASEURL}/cdn/api/v1/download/${fileKey}`;
+    const filePath = path.join(tmpStoragePath, `${version}.vsix`);
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
     }

@@ -4,6 +4,8 @@ Enhance your development experience with Visual Studio Code.
 
 Visual Studio Code is the current recommended IDE for all Cisco Developers.
 
+**Note**: This extension is solely an installer for the Cisco IDE extension. Once the Cisco IDE extension is installed, DevX installer will be automatically uninstalled.
+
 As a developer you should expect your IDE to support auto-completion, navigation and reference finding, inline detection of a range of coding errors and refactoring aids for common tasks. It should also be possible to build and test your code from within the environment to avoid the need for constant context switching. Enabling these features and learning to use them will make you more productive and lead to a better experience when working with source code
 
 ## Faster Development

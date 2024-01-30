@@ -3,14 +3,11 @@
     "displayName": "DevX Installer",
     "description": "",
     "icon": "images/installer.png",
-    "version": "24.1.1",
+    "version": "24.1.2",
     "engines": {
         "vscode": "^1.70.0"
     },
     "publisher": "team-devx",
-    "repository": {
-        "url": "https://github.com/shyam-arora/cisco-ide"
-    },
     "categories": [
         "Other"
     ],

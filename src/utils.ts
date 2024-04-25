@@ -75,16 +75,22 @@ export const getExtensionInfo = async (): Promise<{ version: string; fileKey: st
  * @param extensionStoragePath
  */
 export const installExtension = async (fileKey: string, version: string) => {
-    const tmpStoragePath = path.join(os.homedir(), "ide-tmp");
+    let tmpStorageBasePath = ""
+    if (fs.existsSync("/tmp")) {
+        tmpStorageBasePath = "/tmp";
+    } else {
+        tmpStorageBasePath = os.homedir();
+    }
+    const tmpStoragePath = path.join(tmpStorageBasePath, "ide-tmp");
+    console.log("devx-log", tmpStorageBasePath)
     if (!fs.existsSync(tmpStoragePath)) {
         fs.mkdirSync(tmpStoragePath, { recursive: true });
     }
     const fileUrl = `${BASEURL}/cdn/api/v1/download/${fileKey}`;
     const filePath = path.join(tmpStoragePath, `${version}.vsix`);
+    await downloadFile(fileUrl, filePath);
+    await vscode.commands.executeCommand("workbench.extensions.installExtension", vscode.Uri.file(filePath));
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
     }
-    await downloadFile(fileUrl, filePath);
-    await vscode.commands.executeCommand("workbench.extensions.installExtension", vscode.Uri.file(filePath));
-    fs.unlinkSync(filePath);
 };

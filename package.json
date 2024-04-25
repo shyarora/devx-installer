@@ -3,7 +3,7 @@
     "displayName": "DevX Installer",
     "description": "",
     "icon": "images/installer.png",
-    "version": "24.1.2",
+    "version": "24.4.3",
     "engines": {
         "vscode": "^1.70.0"
     },
@@ -16,7 +16,12 @@
     ],
     "main": "./dist/extension.js",
     "contributes": {
-        "commands": []
+        "commands": [
+            {
+                "command": "ide-installer.update-cisco-ide",
+                "title": "Devx Installer: Update Cisco IDE"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
@@ -33,6 +38,7 @@
         "@types/glob": "^7.2.0",
         "@types/mocha": "^9.1.1",
         "@types/node": "16.x",
+        "@types/semver": "^7.5.8",
         "@types/vscode": "^1.70.0",
         "@typescript-eslint/eslint-plugin": "^5.31.0",
         "@typescript-eslint/parser": "^5.31.0",

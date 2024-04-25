@@ -22,7 +22,7 @@ export const showReloadPrompt = async (message: string) => {
  * @returns
  */
 export const infiniteProgress = (title: string) => {
-    let finish = () => {};
+    let finish = () => { };
     vscode.window.withProgress(
         {
             location: ProgressLocation.Notification,
@@ -57,7 +57,7 @@ const downloadFile = async (url: string, destinationPath: string) => {
     });
 };
 
-const getExtensionInfo = async (): Promise<{ version: string; fileKey: string }> => {
+export const getExtensionInfo = async (): Promise<{ version: string; fileKey: string }> => {
     try {
         const result = await axios.get(`${BASEURL}/extension-namespace/api/marketplace/v1/get-installer-info`);
         return result.data?.latestVersion;
@@ -74,12 +74,11 @@ const getExtensionInfo = async (): Promise<{ version: string; fileKey: string }>
  *
  * @param extensionStoragePath
  */
-export const installExtension = async () => {
+export const installExtension = async (fileKey: string, version: string) => {
     const tmpStoragePath = path.join(os.homedir(), "ide-tmp");
     if (!fs.existsSync(tmpStoragePath)) {
         fs.mkdirSync(tmpStoragePath, { recursive: true });
     }
-    const { fileKey, version } = await getExtensionInfo();
     const fileUrl = `${BASEURL}/cdn/api/v1/download/${fileKey}`;
     const filePath = path.join(tmpStoragePath, `${version}.vsix`);
     if (fs.existsSync(filePath)) {

@@ -3,11 +3,15 @@
     "displayName": "DevX Installer",
     "description": "",
     "icon": "images/installer.png",
-    "version": "24.4.4",
+    "version": "25.10.1",
     "engines": {
         "vscode": "^1.70.0"
     },
     "publisher": "team-devx",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shyarora/devx-installer.git"
+    },
     "categories": [
         "Other"
     ],
